@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <div id="chart_div"></div>
+    <script>
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      setTimeout(() => google.charts.setOnLoadCallback(drawChart),60000);
+      let arr ; 
+      fetch('http://192.168.15.128:2204/getData')
+        .then(response => response.json())
+        .then(data=>{
+            arr=data
+        });
+
+      function drawChart() {
+
+        console.log(arr);
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Time of Day');
+        data.addColumn('number', 'Nhiệt độ');
+
+        let keys = Object.keys(arr);
+        let values = Object.values(arr);
+
+        let dataa = [];
+        for(let i = 0;i<keys.length;i++) {
+          dataa.push([new Date(keys[i]), values[i]]);
+        }
+        console.log(dataa);
+
+        data.addRows(dataa);
+
+        var options = {
+          hAxis: {
+            format: 'HH:mm:ss',
+            gridlines: {count: 5}
+          },
+          vAxis: {
+            gridlines: {color: 'none'},
+            minValue: 0
+          }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+  
+    </script>
+
+</body>
+
+</html>
