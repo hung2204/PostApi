@@ -1,3 +1,14 @@
+# Đề tài:
+1. Cài đặt Docker
+2. Cài đặt Vernemq broker (docker run -e "DOCKER_VERNEMQ_ACCEPT_EULA=yes" -e "DOCKER_VERNEMQ_ALLOW_ANONYMOUS=on" --name vernemq1 -d vernemq/vernemq)
+3. Cài đặt Postgresql dạng docker hoặc trực tiếp (HD cài bằng docker https://hub.docker.com/_/postgres)
+4. Viết bằng Golang 1 chương trình giả lập 1 thiết bị cảm biến IOT gửi thông số nhiệt độ vào MQTT broker ngẫu nhiên giá trị với min value là -40 và max value là 120
+ Cấu trúc bản tin gửi vào broker như sau: {"temperature":"80"}
+ Tên topic: DeviceID/Temperature . Ví dụ: device1/temperature
+ Interval 10 giây gửi 1 bản tin
+5. Ở golang đồng thời subscribe vào topic được gửi bản tin nhiệt độ tới, lưu trữ vào DB postgresql. Cung cấp API cho phép truy xuất giá trị này
+6. Sử dụng bootstrap hoặc tự viết 1 chương trình Frontend ngôn ngữ tự chọn mô phỏng dữ liệu lên biểu đồ đường (line chart). Khuyến khích mô phỏng real time bằng websocket, hoặc có thể gọi api liên tục.
+
 # post
 MQTTBROKER
    cài đặt:
